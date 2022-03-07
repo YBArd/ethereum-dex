@@ -1,0 +1,152 @@
+{
+	"compiler": {
+		"version": "0.8.7+commit.e28d00a7"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_tokenAddress",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_tokenAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "addLiquidity",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getReserve",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "token",
+				"outputs": [
+					{
+						"internalType": "contract Token",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "tokenAddress",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"author": "Yuval B. Ardenbaum ",
+			"details": "Only ETH-token pairs for now like Uniswap V1",
+			"kind": "dev",
+			"methods": {
+				"addLiquidity(uint256)": {
+					"details": "msg.sender must call the approve() function to                          Approve the exchange spending their tokens",
+					"params": {
+						"_tokenAmount": "Amount of tokens to add to liquidity pool"
+					}
+				},
+				"constructor": {
+					"details": "Requires that the address of the token is not the 0 addressSets state variable tokenAddress to argument _tokenAddress",
+					"params": {
+						"_tokenAddress": "Address of token contract"
+					}
+				},
+				"getReserve()": {
+					"returns": {
+						"_0": "Balance of tokens in liquidity pool"
+					}
+				}
+			},
+			"title": "An exchange for a trading pair of tokens",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"addLiquidity(uint256)": {
+					"notice": "Adds liquidity to token pool for enabling trades"
+				},
+				"constructor": {
+					"notice": "Initializes instance of a token-ETH exchange"
+				},
+				"getReserve()": {
+					"notice": "Returns the balance of tokens in the liquidity pool"
+				},
+				"tokenAddress()": {
+					"notice": "FIELDS ///"
+				}
+			},
+			"notice": "Based off Uniswap factory-exchange model             ",
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/exchange.sol": "Exchange"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/exchange.sol": {
+			"keccak256": "0x14bff59d75965ef10fea4f3e42816d8769f26306a613c5fc81516bb245e737e9",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2110d807a43ad584afafaa9dd31911c3750d7b0e67245cf61923a931bc353508",
+				"dweb:/ipfs/QmakPedSvRiibr4kFLZF775neDtTMFbjQJWN2C5y9XESaX"
+			]
+		},
+		"contracts/token.sol": {
+			"keccak256": "0x7ad31fffc9839ddf228944e8e35824f4f0eede0cd1b3d55c4687e1c954701b84",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://304992da8ca6f8d9e45639519f57905c08de29ac0d9c717be1a9310696318cd8",
+				"dweb:/ipfs/QmTb3jPS782kS8df7cGgGKvGkiPRJ8wAJpWC3EysYrYyZH"
+			]
+		}
+	},
+	"version": 1
+}
