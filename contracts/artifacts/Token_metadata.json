@@ -1,0 +1,382 @@
+{
+	"compiler": {
+		"version": "0.8.7+commit.e28d00a7"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_symbol",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_decimals",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_totalSupply",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "Approval",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "Transfer",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "allowance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_spender",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_value",
+						"type": "uint256"
+					}
+				],
+				"name": "approve",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "balanceOf",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "decimals",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "name",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "symbol",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalSupply",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_value",
+						"type": "uint256"
+					}
+				],
+				"name": "transfer",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "success",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_from",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_value",
+						"type": "uint256"
+					}
+				],
+				"name": "transferFrom",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"author": "Yuval B. Ardenbaum",
+			"details": "Uses the OpenZeppelin ERC20 standard",
+			"events": {
+				"Approval(address,address,uint256)": {
+					"params": {
+						"owner": "Owner of the tokens",
+						"spender": "Address approved to spend caller's tokens",
+						"value": "Value of tokens spender is approved to spend"
+					}
+				},
+				"Transfer(address,address,uint256)": {
+					"params": {
+						"from": "The sender' address",
+						"to": "The recipient's address",
+						"value": "The value of tokens to be transferred"
+					}
+				}
+			},
+			"kind": "dev",
+			"methods": {
+				"approve(address,uint256)": {
+					"details": "Requires that the spender's address is not the 0 address",
+					"params": {
+						"_spender": "The address approved to spend on behalf of caller address",
+						"_value": "The value that the spender is approved to spend"
+					},
+					"returns": {
+						"_0": "bool            Returns true if approval successful"
+					}
+				},
+				"constructor": {
+					"details": "Initializes the totalSupply as being owned by contract deployer    ",
+					"params": {
+						"_decimals": "The number of decimal places (the base unit)",
+						"_name": "The name of the token",
+						"_symbol": "The symbol of the token",
+						"_totalSupply": "The total existing supply of tokens"
+					}
+				},
+				"transfer(address,uint256)": {
+					"details": "Requires balance of sender to be greater than or equal to the value to be transferred ",
+					"params": {
+						"_to": "The recipient address",
+						"_value": "The value of tokens to be transferred"
+					},
+					"returns": {
+						"success": "        Returns true if transfer successful"
+					}
+				},
+				"transferFrom(address,address,uint256)": {
+					"details": "Requires that the value transferred is less than or equal to the balance of the _from addressRequires that the value transferred is less than or equal to the allowance",
+					"params": {
+						"_from": "Sender's address",
+						"_to": "Recipient's address",
+						"_value": "Value of tokens transferred"
+					},
+					"returns": {
+						"_0": "bool            Returns true if transfer successful"
+					}
+				}
+			},
+			"title": "An ERC20 token",
+			"version": 1
+		},
+		"userdoc": {
+			"events": {
+				"Approval(address,address,uint256)": {
+					"notice": "Emitted when an address is approved to spend tokens on the caller's behalf"
+				},
+				"Transfer(address,address,uint256)": {
+					"notice": "Emitted when tokens are transferred from one address to another"
+				}
+			},
+			"kind": "user",
+			"methods": {
+				"approve(address,uint256)": {
+					"notice": "Approves an address to spend on the caller address's behalf"
+				},
+				"balanceOf(address)": {
+					"notice": "MAPPINGS ///"
+				},
+				"constructor": {
+					"notice": "Constructor to initializ token instance"
+				},
+				"name()": {
+					"notice": "FIELDS ///"
+				},
+				"transfer(address,uint256)": {
+					"notice": "External function to call _transfer with a certain value of tokens from one address to another"
+				},
+				"transferFrom(address,address,uint256)": {
+					"notice": "Approved spender transfers tokens up to approved value from one address to another"
+				}
+			},
+			"notice": "Implements an ERC20 token",
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/token.sol": "Token"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/token.sol": {
+			"keccak256": "0x7ad31fffc9839ddf228944e8e35824f4f0eede0cd1b3d55c4687e1c954701b84",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://304992da8ca6f8d9e45639519f57905c08de29ac0d9c717be1a9310696318cd8",
+				"dweb:/ipfs/QmTb3jPS782kS8df7cGgGKvGkiPRJ8wAJpWC3EysYrYyZH"
+			]
+		}
+	},
+	"version": 1
+}
