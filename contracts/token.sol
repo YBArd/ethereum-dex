@@ -58,7 +58,7 @@ contract Token {
         balanceOf[msg.sender] = totalSupply;
     }
 
-    /// FUNCITONS ///
+    /// FUNCTIONS ///
 
     /// @notice                 External function to call _transfer with a certain value of tokens from one address to another
     /// @dev                    Requires balance of sender to be greater than or equal to the value to be transferred 

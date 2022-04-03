@@ -3,6 +3,7 @@ const { Contract } = require('ethers');
 const { ethers } = require('hardhat');
 const { events } = require('events');
 
+
 describe("Token", () => {
 
 	let owner;
@@ -42,6 +43,12 @@ describe("Token", () => {
 			expect(token.transfer(addr2.address, 1))
 				.to.emit(token, "Transfer")
 				.withArgs(addr1.address, addr2.address, 1);
+		});
+
+		it("Should emit event when approve is called", async () => {
+			expect(token.approve(addr1.address, 1))
+			.to.emit(token, "Approval")
+			.withArgs(addr1.address, 1);
 		});
 	});
 });
