@@ -1,7 +1,7 @@
 const { expect } = require('chai');
-const { Contract } = require('ethers');
+//const { Contract } = require('ethers');
 const { ethers } = require('hardhat');
-const { events } = require('events');
+//const { events } = require('events');
 
 
 describe("Token", () => {
