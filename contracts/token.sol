@@ -65,19 +65,19 @@ contract Token {
     /// @param _to              The recipient address
     /// @param _value           The value of tokens to be transferred
     /// @return success         Returns true if transfer successful
-    function transfer(address _to, uint256 _value) external returns (bool success) {
+    function transfer(address _to, uint256 _value) external returns (bool) {
         require(balanceOf[msg.sender] >= _value);
         _transfer(msg.sender, _to, _value);
         return true;
     }  
 
     /// @notice                 Subtracts value of tokens from sender's balance and adds to recipient's balance
-    /// @dev                    Requires that recipient can't be 0 address    
+    /// @dev                       Requires that recipient can't be 0 address    
     /// @param _from            Sender address
     /// @param _to              Recipient address
     /// @param _value           Value of tokens being transferred
     /// @return success         Returns true if successful         
-    function _transfer(address _from, address _to, uint256 _value) internal returns (bool success) {
+    function _transfer(address _from, address _to, uint256 _value) internal returns (bool) {
         require(_to != address(0));
         balanceOf[_from] = balanceOf[_from] - (_value);
         balanceOf[_to] = balanceOf[_to] + (_value);
