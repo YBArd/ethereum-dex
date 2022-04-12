@@ -1,8 +1,5 @@
 const { expect } = require('chai');
-//const { Contract } = require('ethers');
-const { ethers } = require('hardhat');
-//const { events } = require('events');
-
+const { ethers, waffle } = require('hardhat');
 
 describe("Token", () => {
 
@@ -12,6 +9,7 @@ describe("Token", () => {
 	let decimals;
 	let supply;
 	let addr1, addr2;
+	let provider;
 
 	beforeEach(async () => {
 		[owner, addr1, addr2] = await ethers.getSigners();
@@ -19,6 +17,7 @@ describe("Token", () => {
 		decimals = 18;
 		supply = 10000000;
 		token = await Token.deploy('TEST Coin', 'TEST', decimals, supply);
+		provider = waffle.provider;
 	});
 
 	describe('Deployment', () => {
@@ -51,6 +50,16 @@ describe("Token", () => {
 			expect(token.transfer(addr2.address, 1))
 				.to.emit(token, "Transfer")
 				.withArgs(addr1.address, addr2.address, 1);
+		});
+
+		it("Should update balances of sender and recipient addresses", async () => {
+			/*let senderBal = provider.getBalance(addr1.address);
+			let recipientBal = provider.getBalance(addr2.address);
+			await token.transfer(addr2, 1);
+			expect(await provider.getBalance(addr2))
+				.to.equal(recipientBal + 1);*/
+			expect(await token.balanceOf(addr1.address))
+				.to.equal(0);
 		});
 	});
 
