@@ -1,6 +1,6 @@
 const { ethers, waffle } = require('hardhat');
 const { expect } = require('chai');
-const { web3 } = require('web3');
+const { web3 } = require('@nomiclabs/hardhat-web3');
 const provider = waffle.provider;
 
 describe("Exchange", () => {
@@ -20,16 +20,16 @@ describe("Exchange", () => {
 	describe("addLiquidity", async () => {
 		
 		it("Adds liquidity to the exchange", async () => {
-			await token.approve(exchange.address, 2);
-			await exchange.addLiquidity(2, { value: {_hex: '0x1', _isBigNumber: true} });
+			await token.approve(exchange.address, 200);
+			await exchange.addLiquidity(200, { value: 100 });
 			expect(await provider.getBalance(exchange.address))
-				.to.equal(1);
+				.to.equal(100);
 			expect(await exchange.getReserve())
-				.to.equal(2);
+				.to.equal(200);
 		});
 	});
 
-	describe("Price", async () => {
+	describe("priceFunction", async () => {
 		it("Calculates the correct price for an asset", async () => {
 			await token.approve(exchange.address, 2000);
 			await exchange.addLiquidity(2000, { value: 1000 })
@@ -41,4 +41,41 @@ describe("Exchange", () => {
 				.to.equal(2000);
 		});
 	});
+
+	describe("getTokenAmount", async () => {
+		it("Gets the correct token amount", async () => {
+			await token.approve(exchange.address, 2000);
+			await exchange.addLiquidity(2000, { value: 1000 });
+			let purchasedTokens = await exchange.getTokenAmount(1);
+    		expect(Web3.utils.fromWei(String(purchasedTokens)))
+    			.to.equal("1.998001998001998001");
+			
+			purchasedTokens = await exchange.getTokenAmount(100);
+			expect(Web3.utils.fromWei(String(purchasedTokens)))
+				.to.equal('181.818181818181818181');
+
+			purchasedTokens = await exchange.getTokenAmount(1000);
+			expect(Web3.utils.fromWei(String(purchasedTokens)))
+				.to.equal('1000');
+		});
+	});
+
+	describe("getEthAmount", async () => {
+		it("Gets the correct ether amount", async () => {	
+			await token.approve(exchange.address, 2000);
+			await exchange.addLiquidity(2000, { value: 1000 });
+			let purchasedEther = await exchange.getEthAmount(2);
+			expect(Web3.utils.fromWei(String(purchasedEther)))
+				.to.equal('0.999000999000999');
+
+			purchasedEther = await exchange.getEthAmount(100);
+			expect(Web3.utils.fromWei(String(purchasedEther)))
+				.to.equal('47.619047619047619047');
+
+			purchasedEther = await exchange.getEthAmount(2000);
+			expect(Web3.utils.fromWei(String(purchasedEther)))
+				.to.equal('500');
+		});
+	});
+
 });

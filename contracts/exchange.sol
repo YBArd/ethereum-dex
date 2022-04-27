@@ -50,10 +50,32 @@ contract Exchange {
         return ( y * 1000) / x;
     }
 
-    /// @notice                Superior constant product price calculator 
+    /// @notice                Output amount for desired token during trades
     /// @return                Price of Ether or token 
-    function getAmount(uint256 inputAmount, uint256 y, uint256 x) private pure return (uint256) {
+    function getAmount(uint256 inputAmount, uint256 y, uint256 x) private pure returns (uint256) {
         require(y > 0 && x > 0, "invalid input/output reserve");
-        return (inputAmount * x) / (y + inputAmount);
+        return ((inputAmount * x * 1000000000000000000) / (y + inputAmount));
     }
+
+    /// @notice                 Calculates amount of token that can be purchased with eth
+    /// @return                 Tokens purchased
+    function getTokenAmount(uint256 _ethSold) public view returns (uint256) {
+        require(_ethSold > 0, "ethSold is invalid");
+        uint256 tokenReserve = getReserve();
+        return getAmount(_ethSold, address(this).balance, tokenReserve);
+    }
+
+    /// @notice                 Calculates amount of eth that can be purchased with tokens
+    /// @return                 Eth purchased
+    function getEthAmount(uint256 _tokenSold) public view returns (uint256) {
+        require(_tokenSold > 0, "tokenSold is invalid");
+        uint256 tokenReserve = getReserve();
+        return getAmount(_tokenSold, tokenReserve, address(this).balance);
+    }
+
+    /// @notice                 Swaps ether for tokens
+    function swapEthToToken(uint256 _mintTokens) public payable {
+        
+    }
+
 }
