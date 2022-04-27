@@ -74,8 +74,19 @@ contract Exchange {
     }
 
     /// @notice                 Swaps ether for tokens
-    function swapEthToToken(uint256 _mintTokens) public payable {
-        
+    function swapEthToToken(uint256 _baseTokensRequested) public payable {
+        uint256 reserve = getReserve();
+        uint256 tokenQuote = getAmount(msg.value, address(this).balance - msg.value, reserve);
+        require(tokenQuote >= _baseTokensRequested, "Insufficient liquidity to perform this trade");
+        token.transfer(msg.sender, tokenQuote);
     }
 
+    /// @notice                 Swaps tokens for ether
+    function swapTokenToEth(uint256 _tokenSold, uint256 _baseEthRequested) public payable {
+        uint256 reserve = getReserve();
+        uint256 ethQuote = getAmount(_tokenSold, reserve, address(this).balance);
+        require(ethQuote >= _baseEthRequested, "Insufficient liquidity");
+        token.transferFrom(msg.sender, address(this).balance, _tokenSold);
+        payable(msg.sender).transfer(ethQuote);
+    }
 }
