@@ -2,18 +2,19 @@
 
 pragma solidity ^0.8.6;
 
-/// @title                      An ERC20 token
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+/// @title                      A basic token
 /// @author                     Yuval B. Ardenbaum
-/// @notice                     Implements an ERC20 token
-/// @dev                        Uses the OpenZeppelin ERC20 standard
-contract Token {
+/// @notice                     Implements an ERC20-type token
+contract Token is Ownable {
 
     /// FIELDS ///
 
     string public name; // token name
     string public symbol; // token symbol/ticker
     uint256 public decimals; // Number of decimals 
-    uint256 public totalSupply; // total supply of token
+    uint256 private totalSupply; // total supply of token
 
     /// MAPPINGS ///
 
@@ -58,18 +59,6 @@ contract Token {
         balanceOf[msg.sender] = totalSupply;
     }
 
-
-    /// @notice                 Constructor to initialize inflationary token instance for rewarding LPs 
-    /// @dev                    Initializes the totalSupply as being owned by contract deployer    
-    /// @param _name            The name of the token
-    /// @param _symbol          The symbol of the token
-    /// @param _decimals        The number of decimal places (the base unit)
-    constructor(string memory _name, string memory _symbol, uint _decimals, uint _totalSupply) public {
-        name = _name;
-        symbol = _symbol;
-        decimals = _decimals;
-    }
-
     /// FUNCTIONS ///
 
     /// @notice                 External function to call _transfer with a certain value of tokens from one address to another
@@ -84,7 +73,7 @@ contract Token {
     }  
 
     /// @notice                 Subtracts value of tokens from sender's balance and adds to recipient's balance
-    /// @dev                       Requires that recipient can't be 0 address    
+    /// @dev                    Requires that recipient can't be 0 address    
     /// @param _from            Sender address
     /// @param _to              Recipient address
     /// @param _value           Value of tokens being transferred
@@ -109,8 +98,6 @@ contract Token {
     }
 
     /// @notice                 Approved spender transfers tokens up to approved value from one address to another
-    /// @dev                    Requires that the value transferred is less than or equal to the balance of the _from address
-    /// @dev                    Requires that the value transferred is less than or equal to the allowance
     /// @param _from            Sender's address
     /// @param _to              Recipient's address
     /// @param _value           Value of tokens transferred
@@ -122,4 +109,26 @@ contract Token {
         return true;
     }
 
+    /// @notice                 External function to call _mint                
+    /// @param account          Recipient address of minted tokens
+    /// @param amount           Amount of tokens to be minted to account
+    function mint(address account, uint256 amount) external onlyOwner {
+        require(account != address(0), "Minting to zero address burns the tokens");
+        _mint(account, amount);
+    }
+
+    /// @notice                 Mints tokens from zero address to recipient 
+    /// @param account          Recipient address of minted tokens
+    /// @param amount           Amount of tokens to be minted to account
+    function _mint(address account, uint256 amount) internal {
+        require(account != address(0), "Minting to zero address burns the tokens");
+        totalSupply += amount;
+        balanceOf[account] += amount;
+        emit Transfer(address(0), account, amount);
+    }
+
+    /// @notice                 Returns total supply of token
+    function getTotalSupply() external returns (uint256) {
+        return totalSupply;
+    }
 }

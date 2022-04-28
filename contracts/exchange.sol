@@ -21,7 +21,7 @@ contract Exchange is Token {
     /// @dev                    Requires that the address of the token is not the 0 address
     /// @dev                    Sets state variable tokenAddress to argument _tokenAddress
     /// @param _tokenAddress    Address of token contract
-    constructor(address _tokenAddress) Token('LP Token', 'LP', 18) public {
+    constructor(address _tokenAddress) Token('LP Token', 'LP', 18, 0) public {
         require(_tokenAddress != address(0));
         tokenAddress = _tokenAddress;
         token = Token(tokenAddress);
@@ -33,16 +33,23 @@ contract Exchange is Token {
     /// @dev                    msg.sender must call the approve() function to 
     ///                         Approve the exchange spending their tokens
     /// @param _tokenAmount     Amount of tokens to add to liquidity pool
-    function addLiquidity(uint256 _tokenAmount) public payable {
+    function addLiquidity(uint256 _tokenAmount) public payable returns (uint256) {
         if(getReserve() == 0) {
             token.transferFrom(msg.sender, address(this), _tokenAmount);
+            uint256 lpBalance = address(this).balance;
+            _mint(msg.sender, lpBalance);
+            return lpBalance;
         }
         else {
             uint256 ethLiquidity = address(this).balance - msg.value;
             uint256 tokenLiquidity = getReserve();
             uint256 tokenDeposit = (msg.value * tokenLiquidity) / ethLiquidity;
             require(_tokenAmount >= tokenDeposit, "Insufficient token deposit to add liquidity");
-            token.transferFrom(msg.sender, address(this), tokenDeposit);      }
+            token.transferFrom(msg.sender, address(this), tokenDeposit);     
+            uint256 lpBalance = (token.getTotalSupply() * msg.value) / ethLiquidity;
+            _mint(msg.sender, lpBalance);
+            return lpBalance;
+        }
     }
 
     /// @notice                 Returns the balance of tokens in the liquidity pool
@@ -94,7 +101,7 @@ contract Exchange is Token {
         uint256 reserve = getReserve();
         uint256 ethQuote = getAmount(_tokenSold, reserve, address(this).balance);
         require(ethQuote >= _baseEthRequested, "Insufficient liquidity");
-        token.transferFrom(msg.sender, address(this).balance, _tokenSold);
+        token.transferFrom(msg.sender, address(this), _tokenSold);
         payable(msg.sender).transfer(ethQuote);
     }
 }
