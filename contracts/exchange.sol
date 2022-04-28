@@ -8,7 +8,7 @@ import "./token.sol";
 /// @author                     Yuval B. Ardenbaum 
 /// @notice                     Based off Uniswap factory-exchange model             
 /// @dev                        Only ETH-token pairs for now like Uniswap V1
-contract Exchange {
+contract Exchange is Token {
     
     /// FIELDS ///
 
@@ -21,7 +21,7 @@ contract Exchange {
     /// @dev                    Requires that the address of the token is not the 0 address
     /// @dev                    Sets state variable tokenAddress to argument _tokenAddress
     /// @param _tokenAddress    Address of token contract
-    constructor(address _tokenAddress) public {
+    constructor(address _tokenAddress) Token('LP Token', 'LP', 18) public {
         require(_tokenAddress != address(0));
         tokenAddress = _tokenAddress;
         token = Token(tokenAddress);
@@ -34,7 +34,15 @@ contract Exchange {
     ///                         Approve the exchange spending their tokens
     /// @param _tokenAmount     Amount of tokens to add to liquidity pool
     function addLiquidity(uint256 _tokenAmount) public payable {
-        token.transferFrom(msg.sender, address(this), _tokenAmount);
+        if(getReserve() == 0) {
+            token.transferFrom(msg.sender, address(this), _tokenAmount);
+        }
+        else {
+            uint256 ethLiquidity = address(this).balance - msg.value;
+            uint256 tokenLiquidity = getReserve();
+            uint256 tokenDeposit = (msg.value * tokenLiquidity) / ethLiquidity;
+            require(_tokenAmount >= tokenDeposit, "Insufficient token deposit to add liquidity");
+            token.transferFrom(msg.sender, address(this), tokenDeposit);      }
     }
 
     /// @notice                 Returns the balance of tokens in the liquidity pool
