@@ -44,7 +44,7 @@ contract Token {
 
     /// CONSTRUCTORS ///
 
-    /// @notice                 Constructor to initializ token instance
+    /// @notice                 Constructor to initialize token instance
     /// @dev                    Initializes the totalSupply as being owned by contract deployer    
     /// @param _name            The name of the token
     /// @param _symbol          The symbol of the token
@@ -56,6 +56,18 @@ contract Token {
         decimals = _decimals;
         totalSupply = _totalSupply;
         balanceOf[msg.sender] = totalSupply;
+    }
+
+
+    /// @notice                 Constructor to initialize inflationary token instance for rewarding LPs 
+    /// @dev                    Initializes the totalSupply as being owned by contract deployer    
+    /// @param _name            The name of the token
+    /// @param _symbol          The symbol of the token
+    /// @param _decimals        The number of decimal places (the base unit)
+    constructor(string memory _name, string memory _symbol, uint _decimals, uint _totalSupply) public {
+        name = _name;
+        symbol = _symbol;
+        decimals = _decimals;
     }
 
     /// FUNCTIONS ///
