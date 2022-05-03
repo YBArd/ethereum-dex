@@ -121,5 +121,16 @@ contract Exchange is Token {
         payable(msg.sender).transfer(ethers);
         token.transfer(msg.sender, tokens);
         return (ethers, tokens);
-    }                
+    }
+
+    /// @notice                         Facilitates token-to-token swaps via 
+    ///                                 rerouting ethers to different exchange contract
+    /// @param _tokenSold               Amount of tokens being sold for ether
+    /// @param _baseTokensRequested     Minimum number of tokens requested to execute purchase order
+    /// @param _tokenAddress            Address of tokens to be purchased
+    function tokenSwap(uint256 _tokenSold, uint256 _baseTokensRequested, address _tokenAddress) public {
+        address exchangeAddress = IFactory(factoryAddress).getExchange(_tokenAddress);
+        require(exchangeAddress != address(this) && exchangeAddress != address(0), "Exchange address must exist and can't be the same token's exchange");
+        
+    }             
 }
