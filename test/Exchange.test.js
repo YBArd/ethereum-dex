@@ -24,7 +24,7 @@ describe("Exchange", () => {
 			await exchange.addLiquidity(200, { value: 100 });
 			expect(await provider.getBalance(exchange.address))
 				.to.equal(100);
-			expect(await exchange.getReserve())
+			expect(await exchange.getTokenReserves())
 				.to.equal(200);
 		});
 	});
@@ -33,7 +33,7 @@ describe("Exchange", () => {
 		it("Calculates the correct price for an asset", async () => {
 			await token.approve(exchange.address, 2000);
 			await exchange.addLiquidity(2000, { value: 1000 })
-			const tokenReserve = await exchange.getReserve();
+			const tokenReserve = await exchange.getTokenReserves();
 			const etherReserve = await provider.getBalance(exchange.address);
 			expect(await exchange.getPrice(etherReserve, tokenReserve))
 				.to.equal(500);
@@ -48,15 +48,15 @@ describe("Exchange", () => {
 			await exchange.addLiquidity(2000, { value: 1000 });
 			let purchasedTokens = await exchange.getTokenAmount(1);
     		expect(Web3.utils.fromWei(String(purchasedTokens)))
-    			.to.equal("1.998001998001998001");
+    			.to.equal("1.978041738678708079");
 			
 			purchasedTokens = await exchange.getTokenAmount(100);
 			expect(Web3.utils.fromWei(String(purchasedTokens)))
-				.to.equal('181.818181818181818181');
+				.to.equal('180.1637852593266606');
 
 			purchasedTokens = await exchange.getTokenAmount(1000);
 			expect(Web3.utils.fromWei(String(purchasedTokens)))
-				.to.equal('1000');
+				.to.equal('994.974874371859296482');
 		});
 	});
 
@@ -66,15 +66,15 @@ describe("Exchange", () => {
 			await exchange.addLiquidity(2000, { value: 1000 });
 			let purchasedEther = await exchange.getEthAmount(2);
 			expect(Web3.utils.fromWei(String(purchasedEther)))
-				.to.equal('0.999000999000999');
+				.to.equal('0.989020869339354039');
 
 			purchasedEther = await exchange.getEthAmount(100);
 			expect(Web3.utils.fromWei(String(purchasedEther)))
-				.to.equal('47.619047619047619047');
+				.to.equal('47.16531681753215817');
 
 			purchasedEther = await exchange.getEthAmount(2000);
 			expect(Web3.utils.fromWei(String(purchasedEther)))
-				.to.equal('500');
+				.to.equal('497.487437185929648241');
 		});
 	});
 
