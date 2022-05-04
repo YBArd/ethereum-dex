@@ -41,7 +41,7 @@
     "C:\\Users\\ardyuv001\\ethereum-dex\\ethereum-dex\\contracts\\token.sol": {
       "lastModificationDate": 1651512358321,
       "contentHash": "0029d596f2bc42d58bd37e74317ad9c0",
-      "sourceName": "contracts/token.sol",
+      "sourceName": "contracts/Token.sol",
       "solcConfig": {
         "version": "0.8.6",
         "settings": {
