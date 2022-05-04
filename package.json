@@ -1,0 +1,33 @@
+{
+  "name": "ethereum-dex",
+  "version": "1.0.0",
+  "description": "Simple decentralized cryptocurrency exchange on Ethereum",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YBArd/ethereum-dex.git"
+  },
+  "author": "Yuval B. Ardenbaum <yuval@bescene.org>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YBArd/ethereum-dex/issues"
+  },
+  "homepage": "https://github.com/YBArd/ethereum-dex#readme",
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.5",
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "@nomiclabs/hardhat-web3": "^2.0.0",
+    "chai": "^4.3.6",
+    "ethers": "^5.6.0",
+    "hardhat": "^2.9.1",
+    "mocha": "^9.2.1",
+    "web3": "^1.7.3"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.5.0",
+    "ethereum-waffle": "^3.4.4"
+  }
+}
