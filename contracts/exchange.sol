@@ -153,6 +153,6 @@ contract Exchange is Token {
         uint256 tokenLiquidity = getTokenReserves();
         uint256 ethQuote = getAmount(_tokenSold, tokenLiquidity, address(this).balance);
         token.transferFrom(msg.sender, address(this), _tokenSold);
-        IExchange(exchangeAddress).swapEthToToken{ value: ethQuote }(_baseTokensRequested);
+        IExchange(exchangeAddress).ethTokenTransfer{ value: ethQuote }(_baseTokensRequested, msg.sender);
     }             
 }
