@@ -148,8 +148,8 @@
       ]
     },
     "C:\\Users\\ardyuv001\\ethereum-dex\\ethereum-dex\\contracts\\Exchange.sol": {
-      "lastModificationDate": 1651663735723,
-      "contentHash": "775705d40505ebb7bdc92152810859f2",
+      "lastModificationDate": 1651692827656,
+      "contentHash": "eca4214e6ce1eb83a02ba181f974c83b",
       "sourceName": "contracts/Exchange.sol",
       "solcConfig": {
         "version": "0.8.6",
@@ -187,8 +187,8 @@
       ]
     },
     "C:\\Users\\ardyuv001\\ethereum-dex\\ethereum-dex\\contracts\\Token.sol": {
-      "lastModificationDate": 1651568673416,
-      "contentHash": "0029d596f2bc42d58bd37e74317ad9c0",
+      "lastModificationDate": 1651674368643,
+      "contentHash": "c0fec87f53433b021807a5763715ad8a",
       "sourceName": "contracts/Token.sol",
       "solcConfig": {
         "version": "0.8.6",
