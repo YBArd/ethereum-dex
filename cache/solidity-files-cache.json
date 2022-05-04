@@ -4,7 +4,7 @@
     "C:\\Users\\ardyuv001\\ethereum-dex\\ethereum-dex\\contracts\\exchange.sol": {
       "lastModificationDate": 1651221899434,
       "contentHash": "221d0c230f1d2c3390a42d4916aaf81e",
-      "sourceName": "contracts/exchange.sol",
+      "sourceName": "contracts/Exchange.sol",
       "solcConfig": {
         "version": "0.8.6",
         "settings": {
@@ -145,6 +145,189 @@
       ],
       "artifacts": [
         "Context"
+      ]
+    },
+    "C:\\Users\\ardyuv001\\ethereum-dex\\ethereum-dex\\contracts\\Exchange.sol": {
+      "lastModificationDate": 1651663735723,
+      "contentHash": "775705d40505ebb7bdc92152810859f2",
+      "sourceName": "contracts/Exchange.sol",
+      "solcConfig": {
+        "version": "0.8.6",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./Token.sol",
+        "./IFactory.sol",
+        "./IExchange.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.6"
+      ],
+      "artifacts": [
+        "Exchange"
+      ]
+    },
+    "C:\\Users\\ardyuv001\\ethereum-dex\\ethereum-dex\\contracts\\Token.sol": {
+      "lastModificationDate": 1651568673416,
+      "contentHash": "0029d596f2bc42d58bd37e74317ad9c0",
+      "sourceName": "contracts/Token.sol",
+      "solcConfig": {
+        "version": "0.8.6",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/access/Ownable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.6"
+      ],
+      "artifacts": [
+        "Token"
+      ]
+    },
+    "C:\\Users\\ardyuv001\\ethereum-dex\\ethereum-dex\\contracts\\IFactory.sol": {
+      "lastModificationDate": 1651650637422,
+      "contentHash": "aaf637750e9c292bb469af1e176250c9",
+      "sourceName": "contracts/IFactory.sol",
+      "solcConfig": {
+        "version": "0.8.6",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.6"
+      ],
+      "artifacts": [
+        "IFactory"
+      ]
+    },
+    "C:\\Users\\ardyuv001\\ethereum-dex\\ethereum-dex\\contracts\\IExchange.sol": {
+      "lastModificationDate": 1651664069356,
+      "contentHash": "2960e253cc776363700989199eff4e24",
+      "sourceName": "contracts/IExchange.sol",
+      "solcConfig": {
+        "version": "0.8.6",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.6"
+      ],
+      "artifacts": [
+        "IExchange"
+      ]
+    },
+    "C:\\Users\\ardyuv001\\ethereum-dex\\ethereum-dex\\contracts\\Factory.sol": {
+      "lastModificationDate": 1651650098184,
+      "contentHash": "0520ca2e95a3f28832e5aeae0ed3f781",
+      "sourceName": "contracts/Factory.sol",
+      "solcConfig": {
+        "version": "0.8.6",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./Exchange.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.6"
+      ],
+      "artifacts": [
+        "Factory"
       ]
     }
   }
