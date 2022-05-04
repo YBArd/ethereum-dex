@@ -128,7 +128,27 @@ contract Token is Ownable {
     }
 
     /// @notice                 Returns total supply of token
-    function getTotalSupply() external returns (uint256) {
+    function getTotalSupply() public returns (uint256) {
         return totalSupply;
+    }
+
+    /// @notice                  External function to call _burn
+    function burn(address account, uint256 amount) external {
+        require(account != address(0), "Can't burn tokens at the zero address");
+        _burn(account, amount);
+    }
+
+    /// @notice                 Burns tokens from given account by transferring them to zero address
+    function _burn(address account, uint256 amount) internal {
+        require(account != address(0), "Can't burn tokens at the zero address");
+        uint256 accBalance = balanceOf[account];
+        require(accBalance >= amount, "Cannot burn more than balance of account");
+
+        unchecked {
+            balanceOf[account] = accBalance - amount;
+        }
+
+        totalSupply -= amount;
+        emit Transfer(account, address(0), amount);
     }
 }

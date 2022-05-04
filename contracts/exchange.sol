@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.6;
 
-import "./token.sol";
+import "./Token.sol";
 
 /// @title                      An exchange for a trading pair of tokens
 /// @author                     Yuval B. Ardenbaum 

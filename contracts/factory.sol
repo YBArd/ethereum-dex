@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.6;
 
-import "./exchange.sol";
+import "./Exchange.sol";
 
 /// @title						A registry for all token-pair exchanges
 /// @author						Yuval B. Ardenbaum
@@ -35,5 +35,4 @@ contract Factory {
 	function getExchange(address _tokenAddress) public view returns (address) {
 		return tokenToExchange[_tokenAddress];
 	}
-
 }
