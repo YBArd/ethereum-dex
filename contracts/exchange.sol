@@ -3,6 +3,7 @@
 pragma solidity ^0.8.6;
 
 import "./Token.sol";
+import "./IFactory.sol";
 
 /// @title                      An exchange for a trading pair of tokens
 /// @author                     Yuval B. Ardenbaum 
@@ -93,21 +94,39 @@ contract Exchange is Token {
         return getAmount(_tokenSold, tokenReserve, address(this).balance);
     }
 
-    /// @notice                 Swaps ether for tokens
-    function swapEthToToken(uint256 _baseTokensRequested) public payable {
+    /// @notice                         Swaps ether for tokens
+    /// @param _baseTokensRequested     Minimum output tokens to execute order
+    /// @param user                     The recipient address that will receive purchased tokens
+    ///                                 to facilitate token-token swaps    
+    function swapEthToToken(uint256 _baseTokensRequested, address user) private {
         uint256 reserve = getTokenReserves();
         uint256 tokenQuote = getAmount(msg.value, address(this).balance - msg.value, reserve);
         require(tokenQuote >= _baseTokensRequested, "Insufficient liquidity to perform this trade");
-        token.transfer(msg.sender, tokenQuote);
+        token.transfer(user, tokenQuote);
     }
 
-    /// @notice                 Swaps tokens for ether
+    /// @notice                         Routes tokens to user
+    /// @param _baseTokensRequested     Minimum number of tokens required to execute purchase order 
+    function routeEthToToken(uint256 _baseTokensRequested) public payable {
+        swapEthToToken(_baseTokensRequested, msg.sender);
+    }
+
+    /// @notice                     Swaps tokens for ether
+    /// @param _tokenSold           Amount of tokens to be sold
+    /// @param _baseEthRequested    Minimum output to execute purchase order
     function swapTokenToEth(uint256 _tokenSold, uint256 _baseEthRequested) public payable {
         uint256 reserve = getTokenReserves();
         uint256 ethQuote = getAmount(_tokenSold, reserve, address(this).balance);
         require(ethQuote >= _baseEthRequested, "Insufficient liquidity");
         token.transferFrom(msg.sender, address(this), _tokenSold);
         payable(msg.sender).transfer(ethQuote);
+    }
+
+    /// @notice                         Sends output tokens to a recipient
+    /// @param _baseTokensRequested     Minimum output tokens to execute purchase order
+    /// @param _user                    Address of user swapping tokens
+    function ethTokenTransfer(uint256 baseTokensRequested, address _user) public payable {
+        swapEthToToken(_baseTokensRequested, _user);
     }
 
     /// @notice                 Removes eth/token liquidity from exchange contract proportionally
@@ -131,6 +150,9 @@ contract Exchange is Token {
     function tokenSwap(uint256 _tokenSold, uint256 _baseTokensRequested, address _tokenAddress) public {
         address exchangeAddress = IFactory(factoryAddress).getExchange(_tokenAddress);
         require(exchangeAddress != address(this) && exchangeAddress != address(0), "Exchange address must exist and can't be the same token's exchange");
-        
+        uint256 tokenLiquidity = getTokenReserves();
+        uint256 ethQuote = getAmount(_tokenSold, tokenLiquidity, address(this).balance);
+        token.transferFrom(msg.sender, address(this), _tokenSold);
+        IExchange(exchangeAddress).swapEthToToken{ value: ethQuote }(_baseTokensRequested);
     }             
 }
