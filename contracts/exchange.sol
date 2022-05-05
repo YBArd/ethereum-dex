@@ -4,6 +4,7 @@ pragma solidity ^0.8.6;
 
 import "./Token.sol";
 import "./IFactory.sol";
+import "./IExchange.sol";
 
 /// @title                      An exchange for a trading pair of tokens
 /// @author                     Yuval B. Ardenbaum 
@@ -49,7 +50,7 @@ contract Exchange is Token {
             uint256 tokenDeposit = (msg.value * tokenLiquidity) / ethLiquidity;
             require(_tokenAmount >= tokenDeposit, "Insufficient token deposit to add liquidity");
             token.transferFrom(msg.sender, address(this), tokenDeposit);     
-            uint256 lpBalance = (token.getTotalSupply() * msg.value) / ethLiquidity;
+            uint256 lpBalance = (token.totalSupply() * msg.value) / ethLiquidity;
             _mint(msg.sender, lpBalance);
             return lpBalance;
         }
@@ -74,8 +75,8 @@ contract Exchange is Token {
         require(y > 0 && x > 0, "insufficient eth/token liquidity");
         uint256 feeAdjustedInput = inputAmount * 99;
         uint256 numerator = feeAdjustedInput * x;
-        uint256 denominator = (y * 100) + feeAdjustedInput;
-        return (numerator/denominator);
+        uint256 denominator = (y*100) + feeAdjustedInput;
+        return (numerator * 1000000000000000000 / denominator);
     }
 
     /// @notice                 Calculates amount of token that can be purchased with eth
@@ -125,7 +126,7 @@ contract Exchange is Token {
     /// @notice                         Sends output tokens to a recipient
     /// @param _baseTokensRequested     Minimum output tokens to execute purchase order
     /// @param _user                    Address of user swapping tokens
-    function ethTokenTransfer(uint256 baseTokensRequested, address _user) public payable {
+    function ethTokenTransfer(uint256 _baseTokensRequested, address _user) public payable {
         swapEthToToken(_baseTokensRequested, _user);
     }
 
@@ -134,8 +135,8 @@ contract Exchange is Token {
     /// @return                 Returns ether amount and token amount removed from LPs
     function removeLiquidity(uint256 _amount) public returns (uint256, uint256) {
         require(_amount > 0, "Can't remove zero liquidity");
-        uint256 ethers = (address(this).balance * _amount) / getTotalSupply(); // ratio of ethers to total LP reserves
-        uint256 tokens = (getTokenReserves() * _amount) / getTotalSupply(); // ratio of tokens to total LP reserves
+        uint256 ethers = (address(this).balance * _amount) / token.totalSupply(); // ratio of ethers to total LP reserves
+        uint256 tokens = (getTokenReserves() * _amount) / token.totalSupply(); // ratio of tokens to total LP reserves
         _burn(msg.sender, _amount); // burns lp tokens
         payable(msg.sender).transfer(ethers);
         token.transfer(msg.sender, tokens);
@@ -144,7 +145,7 @@ contract Exchange is Token {
 
     /// @notice                         Facilitates token-to-token swaps via 
     ///                                 rerouting ethers to different exchange contract
-    /// @param _tokenSold               Amount of tokens being sold for ether
+    /// @param _tokenSold               Amount of tokens being sold for other tokens
     /// @param _baseTokensRequested     Minimum number of tokens requested to execute purchase order
     /// @param _tokenAddress            Address of tokens to be purchased
     function tokenSwap(uint256 _tokenSold, uint256 _baseTokensRequested, address _tokenAddress) public {

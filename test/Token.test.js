@@ -86,7 +86,7 @@ describe("Token", () => {
 	describe('transferFrom', () => {
 
 		beforeEach(async () => {
-			await expect(token.approve(addr1.address, 1, { from: owner.address }));
+			await token.approve(addr1.address, 1, { from: owner.address });
 		});
 
 		it("Should revert if sender's balance is less than value", async () => {
@@ -97,6 +97,29 @@ describe("Token", () => {
 		it("Should revert if value of transaction exceeds approved spending amount", async () => {
 			await expect(token.transferFrom(addr1.address, addr2.address, 2))
 				.to.be.reverted;
+		});
+	});
+
+	describe('mint and burn', () => {
+
+		beforeEach(async () => {
+			await token.mint(addr1.address, 100);
+		});
+
+		it("Should mint tokens to the specified address", async () => {
+			expect(await token.balanceOf(addr1.address))
+				.to.equal(100);
+			expect (await token.totalSupply())
+				.to.equal(10000100);
+		});
+
+		it("Should burn tokens belonging to specified address", async () => {
+			await token.burn(addr1.address, 100);
+			expect(await token.balanceOf(addr1.address))
+				.to.equal(0);
+			expect (await token.totalSupply())
+				.to.equal(10000000);
+
 		});
 	});
 });

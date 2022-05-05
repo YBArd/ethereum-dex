@@ -14,7 +14,7 @@ contract Token is Ownable {
     string public name; // token name
     string public symbol; // token symbol/ticker
     uint256 public decimals; // Number of decimals 
-    uint256 private totalSupply; // total supply of token
+    uint256 public totalSupply; // total supply of token
 
     /// MAPPINGS ///
 
@@ -128,9 +128,9 @@ contract Token is Ownable {
     }
 
     /// @notice                 Returns total supply of token
-    function getTotalSupply() public returns (uint256) {
+    /*function getTotalSupply() public view returns (uint) {
         return totalSupply;
-    }
+    }*/
 
     /// @notice                  External function to call _burn
     function burn(address account, uint256 amount) external {
